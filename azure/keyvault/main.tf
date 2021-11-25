@@ -13,6 +13,11 @@ resource "azurerm_key_vault" "this" {
   purge_protection_enabled  = true
   tags                      = var.tags
 
+  network_acls {
+    default_action = "Deny"
+    bypass = "AzureServices"
+  }
+  
   # This will add the current logged in az user
   access_policy {
     tenant_id = data.azurerm_client_config.current.tenant_id
