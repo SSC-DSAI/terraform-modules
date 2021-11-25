@@ -79,7 +79,7 @@ resource "azurerm_app_service" "this" {
 
   #TODO: create variables
   site_config {
-    dotnet_framework_version = "v6.0"
+    dotnet_framework_version = "v4.0"
     http2_enabled = true
     ftps_state = "Disabled"
     scm_type  = "GitHub"
