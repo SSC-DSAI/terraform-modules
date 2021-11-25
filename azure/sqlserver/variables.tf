@@ -48,6 +48,11 @@ variable "ssc_vpn_ip_address" {
   type = string
 }
 
+variable "storage_account_name" {
+  description = "The name of the storage account to use"
+  type        = string
+}
+
 variable "tags" {
   description = "A map of tags to add"
   type        = map(string)
