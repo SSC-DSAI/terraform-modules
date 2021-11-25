@@ -51,8 +51,31 @@ resource "azurerm_app_service" "this" {
   resource_group_name = var.resource_group_name
   app_service_plan_id = azurerm_app_service_plan.this.id
   https_only          = true
+  client_cert_enabled = true
 
   tags = var.tags
+
+  auth_settings {
+    enabled = true
+  }
+
+  logs {
+    detailed_error_messages_enabled = true
+    failed_request_tracing_enabled = true
+    http_logs {
+      retention_in_days = 4
+      retention_in_mb = 10
+    }
+  }
+
+  identity {
+    type = "SystemAssigned"
+  }
+
+  site_config {
+    http2_enabled = true
+    ftps_state = "Disabled"
+  }
 
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.this.instrumentation_key
