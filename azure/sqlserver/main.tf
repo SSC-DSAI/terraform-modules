@@ -100,7 +100,7 @@ resource "azurerm_sql_database" "this" {
 resource "azurerm_storage_container" "this" {
   name                  = "sqlserver-assessment"
   storage_account_name  = data.azurerm_storage_account.this.name
-  container_access_type = "private"
+  container_access_type  = "blob"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -110,6 +110,8 @@ resource "azurerm_mssql_server_security_alert_policy" "this" {
   resource_group_name = var.resource_group_name
   server_name         = azurerm_sql_server.this.name
   state               = "Enabled"
+  email_account_admins       = true
+  email_addresses = ["ssc.dsai-sdia.spc@ssc-spc.gc.ca"]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
