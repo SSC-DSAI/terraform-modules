@@ -19,6 +19,8 @@ resource "azurerm_key_vault_secret" "this" {
   name         = var.administrator_secret_name
   value        = random_password.this.result
   key_vault_id = data.azurerm_key_vault.this.id
+  expiration_date = timeadd(timestamp(), "17520h") # expires in 2 years
+  content_type = "text/plain"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

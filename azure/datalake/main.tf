@@ -17,6 +17,10 @@ resource "azurerm_storage_account" "this" {
   enable_https_traffic_only = true
   min_tls_version           = var.min_tls_version
 
+  network_rules {
+    default_action="Deny"
+  }
+
   queue_properties {
      logging {
         delete                = true
@@ -38,6 +42,8 @@ resource "azurerm_key_vault_secret" "this" {
   name         = var.access_key_secret_name
   value        = azurerm_storage_account.this.primary_access_key
   key_vault_id = var.key_vault_id
+  expiration_date = timeadd(timestamp(), "17520h") # expires in 2 years
+  content_type = "text/plain"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -48,6 +54,8 @@ resource "azurerm_key_vault_secret" "subscription_id_secret_name" {
   name         = var.subscription_id_secret_name
   value        = data.azurerm_client_config.current.subscription_id
   key_vault_id = var.key_vault_id
+  expiration_date = timeadd(timestamp(), "17520h") # expires in 2 years
+  content_type = "text/plain"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -58,4 +66,6 @@ resource "azurerm_key_vault_secret" "tenant_id_secret_name" {
   name         = var.tenant_id_secret_name
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = var.key_vault_id
+  expiration_date = timeadd(timestamp(), "17520h") # expires in 2 years
+  content_type = "text/plain"
 }
