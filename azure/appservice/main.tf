@@ -77,6 +77,16 @@ resource "azurerm_app_service" "this" {
     ftps_state = "Disabled"
   }
 
+  #TODO: create variables
+  site_config {
+    http2_enabled = true
+    ftps_state = "Disabled"
+    scm_type  = "GitHub"
+    always_on = "true"
+    linux_fx_version  = "DOCKER|<arc01.azurecr.io/myapp:latest>"
+    health_check_path = "/v1/heartbeat"
+ }
+
   app_settings = {
     APPINSIGHTS_INSTRUMENTATIONKEY        = azurerm_application_insights.this.instrumentation_key
     DOCKER_REGISTRY_SERVER_URL            = data.azurerm_container_registry.this.login_server
