@@ -4,12 +4,14 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "this" {
-  name                = var.name
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  sku_name            = var.sku_name
-  tenant_id           = data.azurerm_client_config.current.tenant_id
-  tags                = var.tags
+  name                      = var.name
+  location                  = var.location
+  resource_group_name       = var.resource_group_name
+  sku_name                  = var.sku_name
+  tenant_id                 = data.azurerm_client_config.current.tenant_id
+  soft_delete_enabled       = true
+  purge_protection_enabled  = true
+  tags                      = var.tags
 
   # This will add the current logged in az user
   access_policy {
