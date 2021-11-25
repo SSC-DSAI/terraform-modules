@@ -34,6 +34,16 @@ resource "azurerm_storage_account" "this" {
   tags = var.tags
 }
 
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Creating Azure Storage Account Container
+# ---------------------------------------------------------------------------------------------------------------------
+resource "azurerm_storage_container" "ok_container" {
+  name                  = "default"
+  storage_account_name  = azurerm_storage_account.this.name
+  container_access_type = "private"
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Store the Storage Account access key in Azure Key Vault
 # ---------------------------------------------------------------------------------------------------------------------
@@ -68,4 +78,14 @@ resource "azurerm_key_vault_secret" "tenant_id_secret_name" {
   key_vault_id = var.key_vault_id
   expiration_date = timeadd(timestamp(), "17520h") # expires in 2 years
   content_type = "text/plain"
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Azure Storage Accounts use customer-managed key for encryption
+# ---------------------------------------------------------------------------------------------------------------------
+
+resource "azurerm_storage_account_customer_managed_key" "this" {
+  storage_account_id = azurerm_storage_account.this.id
+  key_vault_id       = var.key_vault_id
+  key_name           = var.key_vault_name
 }

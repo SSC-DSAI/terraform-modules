@@ -27,8 +27,13 @@ variable "allow_blob_public_access" {
   default = false
 }
 
+variable "key_vault_name" {
+  description = "The name of the Key Vault to use"
+  type        = string
+}
+
 variable "key_vault_id" {
-  description = "The ID of the Key Vault where the access policy should be created."
+  description = "The ID of the Key Vault to use"
   type        = string
 }
 
