@@ -7,6 +7,11 @@ data "azurerm_container_registry" "this" {
   resource_group_name = var.resource_group_name
 }
 
+# data "azurerm_storage_account" "this" {
+#   name                = var.storage_account_name
+#   resource_group_name = var.resource_group_name
+# }
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Creating Application Insights
 # ---------------------------------------------------------------------------------------------------------------------
@@ -86,6 +91,14 @@ resource "azurerm_app_service" "this" {
     always_on = "true"
     linux_fx_version  = "DOCKER|<arc01.azurecr.io/myapp:latest>"
     health_check_path = "/v1/heartbeat"
+ }
+
+ storage_account {
+   name = "test_name"
+   type = "AzureFiles"
+  #  account_name = data.azurerm_storage_account.this.name
+  #  share_name = "" # Container name
+  #  access_key = "" # Access key for the storage account
  }
 
   app_settings = {
