@@ -7,13 +7,25 @@ data "azurerm_client_config" "current" {}
 # Creating Azure Storage Account
 # ---------------------------------------------------------------------------------------------------------------------
 resource "azurerm_storage_account" "this" {
-  name                     = var.name
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
-  account_tier             = var.account_tier
-  account_replication_type = var.account_replication_type
-  account_kind             = var.account_kind
-  allow_blob_public_access = var.allow_blob_public_access
+  name                      = var.name
+  resource_group_name       = var.resource_group_name
+  location                  = var.location
+  account_tier              = var.account_tier
+  account_replication_type  = var.account_replication_type
+  account_kind              = var.account_kind
+  allow_blob_public_access  = var.allow_blob_public_access
+  enable_https_traffic_only = true
+  min_tls_version           = var.min_tls_version
+
+  queue_properties {
+     logging {
+        delete                = true
+        read                  = true
+        write                 = true
+        version               = "1.0"
+        retention_policy_days = 10
+    }
+  }
 
   tags = var.tags
 }

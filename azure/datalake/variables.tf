@@ -37,6 +37,13 @@ variable "location" {
   type        = string
 }
 
+
+variable "min_tls_version" {
+  description = "min_tls_version - The minimum supported TLS version for the storage account."
+  type        = string
+  default     = "TLS1_2"
+}
+
 variable "name" {
   description = "Specifies the name of the Data lake"
   type        = string
